@@ -4,6 +4,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import me.goodyou10.BlockAlert.Listeners.BreakListener;
+import me.goodyou10.BlockAlert.Listeners.PlaceListener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -17,7 +18,9 @@ public class BlockAlert extends JavaPlugin {
 	public static double version = 0.1;
 	
 	public void onEnable() {
+		//Listeners
 		new BreakListener(this);
+		new PlaceListener(this);
 		
 		log("Plugin loaded!");
 	}
