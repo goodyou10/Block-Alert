@@ -2,3 +2,7 @@ name: BlockAlert
 version: 0.1
 main: me.goodyou10.BlockAlert.BlockAlert
 author: goodyou10
+permissions:
+    blockalert.admin:
+        description: Able to recieve block alert broadcasts
+        default: op

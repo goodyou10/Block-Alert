@@ -22,7 +22,7 @@ public class BreakListener implements Listener {
 		Player player = event.getPlayer();
 		String name = player.getName();
 		Block block = event.getBlock();
-		String bName = block.getType().name().toLowerCase();
+		String bName = block.getType().name().toLowerCase().replaceAll("_", " ");
 		
 		this.plugin.log(name + " has broken " + bName);
 		this.plugin.msgAdmins(name + " has broken " + bName);

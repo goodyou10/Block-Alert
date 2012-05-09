@@ -22,7 +22,7 @@ public class PlaceListener implements Listener {
 		Player player = event.getPlayer();
 		String name = player.getName();
 		Block block = event.getBlockPlaced();
-		String bName = block.getType().name().toLowerCase();
+		String bName = block.getType().name().toLowerCase().replaceAll("_", " ");
 		
 		this.plugin.log(name + " has placed " + bName);
 		this.plugin.msgAdmins(name + " has placed " + bName);
