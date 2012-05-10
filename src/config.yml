@@ -1,6 +1,6 @@
 debug: false
 alert:
-    place:
-    - 46
-    break:
-    - 46
+  place:
+  - 46
+  break:
+  - 46

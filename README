@@ -1,7 +1,7 @@
 Block Alert 
-Latest stable version: 0.1
-Latest development version: 0.2
+Latest stable version: 0.2
+Latest development version: 0.3
 
 Changelog:
 0.1 - First release, break and place detection added
-0.2 - Commands, configuration (now choose which blocks to alert for default is tnt) and bug fixes.
+0.2 - Commands, configuration (now choose which blocks to alert for, default is tnt) and bug fixes.
