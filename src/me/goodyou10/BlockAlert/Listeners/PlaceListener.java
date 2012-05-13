@@ -33,7 +33,6 @@ public class PlaceListener implements Listener {
 		// Should we alert?
 		for (Integer lId : plugin.placeAlert) {
 			if (lId == id) {
-				this.plugin.log(name + " has placed " + bName);
 				this.plugin.msgAdmins(name + " has placed " + bName);
 				break;
 			}

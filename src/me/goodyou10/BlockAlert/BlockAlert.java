@@ -1,5 +1,12 @@
 package me.goodyou10.BlockAlert;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +23,9 @@ public class BlockAlert extends JavaPlugin {
 	Logger log = Logger.getLogger("Minecraft");
 
 	public boolean debug = false;
-	public static double version = 0.2;
+	public boolean logFile = true;
+	public String logFileName = "log.txt";
+	public static double version = 0.3;
 	public List<Integer> placeAlert;
 	public List<Integer> breakAlert;
 
@@ -35,19 +44,63 @@ public class BlockAlert extends JavaPlugin {
 		// Load commands
 		cmds = new Commands(this);
 		this.getCommand("blockalert").setExecutor(cmds);
+		
+		//Log file
+		if(this.logFile) {
+			try {
+				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(getDataFolder(), this.logFileName), true));
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				Date date = new Date();
+				writer.write("Logging started at " + dateFormat.format(date));
+				writer.newLine();
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 
 		log("Plugin loaded!");
 	}
 
 	public void onDisable() {
+		if(this.logFile) {
+			try {
+				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(getDataFolder(), this.logFileName), true));
+				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				Date date = new Date();
+				writer.write("Logging stopped at " + dateFormat.format(date));
+				writer.newLine();
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
 		log("Plugin unloaded!");
 	}
 
 	public void msgAdmins(String message) {
 		debug("Sent \"" + message + "\" to admins.");
+		this.log(message);
 		for (Player player : this.getServer().getOnlinePlayers()) {
 			if (player.hasPermission("blockalert.admin")) {
 				player.sendMessage(ChatColor.GREEN + "[BlockAlert] " + message);
+			}
+		}
+		debug("Writing to log file");
+		if(this.logFile) {
+			try {
+				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(getDataFolder(), this.logFileName), true));
+				DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
+				Date date = new Date();
+				writer.write("[" + dateFormat.format(date) + "] " + message);
+				writer.newLine();
+				writer.flush();
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 		}
 	}

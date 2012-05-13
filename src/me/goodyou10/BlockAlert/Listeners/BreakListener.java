@@ -33,7 +33,6 @@ public class BreakListener implements Listener {
 		// Should we alert?
 		for (Integer lId : plugin.breakAlert) {
 			if (lId == id) {
-				this.plugin.log(name + " has broken " + bName);
 				this.plugin.msgAdmins(name + " has broken " + bName);
 				break;
 			}

@@ -41,6 +41,12 @@ public class Configuration {
 		plugin.breakAlert = conf.getIntegerList("alert.break");
 		this.plugin.debug("Added ids " + plugin.breakAlert.toString()
 				+ " to break alert.");
+		//Log
+		plugin.logFile = conf.getBoolean("log.enabled", true);
+		plugin.logFileName = conf.getString("log.file", "log.txt");
+		this.plugin.debug("Log:");
+		this.plugin.debug("Enabled: " + plugin.logFile);
+		this.plugin.debug("File: " + plugin.logFileName);
 	}
 
 	public boolean exists() {

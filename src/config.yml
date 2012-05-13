@@ -4,3 +4,6 @@ alert:
   - 46
   break:
   - 46
+log:
+  enabled: true
+  file: 'log.txt'
