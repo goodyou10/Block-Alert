@@ -1,8 +1,8 @@
 Block Alert 
-Latest stable version: 0.2
-Latest development version: 0.3
+Latest stable version: 0.3
+Latest development version: 0.4
 
 Changelog:
-0.1 - First release, break and place detection added
+0.1 - First release, break and place detection added.
 0.2 - Commands, configuration (now choose which blocks to alert for, default is tnt) and bug fixes.
-0.3 - Log to file option
+0.3 - Log to file option and ignore admin alerts command.

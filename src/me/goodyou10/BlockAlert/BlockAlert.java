@@ -7,12 +7,15 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import me.goodyou10.BlockAlert.Listeners.BreakListener;
 import me.goodyou10.BlockAlert.Listeners.PlaceListener;
+import me.goodyou10.BlockAlert.Listeners.QuitListener;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -28,6 +31,7 @@ public class BlockAlert extends JavaPlugin {
 	public static double version = 0.3;
 	public List<Integer> placeAlert;
 	public List<Integer> breakAlert;
+	public Map<Player, Boolean> ignore = new HashMap<Player, Boolean>();
 
 	public static Configuration config;
 	public static Commands cmds;
@@ -36,6 +40,7 @@ public class BlockAlert extends JavaPlugin {
 		// Listeners
 		new BreakListener(this);
 		new PlaceListener(this);
+		new QuitListener(this);
 
 		// Load configuration
 		config = new Configuration(this);
@@ -44,12 +49,14 @@ public class BlockAlert extends JavaPlugin {
 		// Load commands
 		cmds = new Commands(this);
 		this.getCommand("blockalert").setExecutor(cmds);
-		
-		//Log file
-		if(this.logFile) {
+
+		// Log file
+		if (this.logFile) {
 			try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(getDataFolder(), this.logFileName), true));
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				BufferedWriter writer = new BufferedWriter(new FileWriter(
+						new File(getDataFolder(), this.logFileName), true));
+				DateFormat dateFormat = new SimpleDateFormat(
+						"dd/MM/yyyy HH:mm:ss");
 				Date date = new Date();
 				writer.write("Logging started at " + dateFormat.format(date));
 				writer.newLine();
@@ -64,10 +71,12 @@ public class BlockAlert extends JavaPlugin {
 	}
 
 	public void onDisable() {
-		if(this.logFile) {
+		if (this.logFile) {
 			try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(getDataFolder(), this.logFileName), true));
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				BufferedWriter writer = new BufferedWriter(new FileWriter(
+						new File(getDataFolder(), this.logFileName), true));
+				DateFormat dateFormat = new SimpleDateFormat(
+						"dd/MM/yyyy HH:mm:ss");
 				Date date = new Date();
 				writer.write("Logging stopped at " + dateFormat.format(date));
 				writer.newLine();
@@ -77,7 +86,7 @@ public class BlockAlert extends JavaPlugin {
 				e.printStackTrace();
 			}
 		}
-		
+
 		log("Plugin unloaded!");
 	}
 
@@ -86,13 +95,18 @@ public class BlockAlert extends JavaPlugin {
 		this.log(message);
 		for (Player player : this.getServer().getOnlinePlayers()) {
 			if (player.hasPermission("blockalert.admin")) {
-				player.sendMessage(ChatColor.GREEN + "[BlockAlert] " + message);
+				if (!this.ignore.containsKey(player)
+						|| !this.ignore.get(player)) {
+					player.sendMessage(ChatColor.GREEN + "[BlockAlert]: "
+							+ message);
+				}
 			}
 		}
-		debug("Writing to log file");
-		if(this.logFile) {
+		if (this.logFile) {
+			debug("Writing to log file");
 			try {
-				BufferedWriter writer = new BufferedWriter(new FileWriter(new File(getDataFolder(), this.logFileName), true));
+				BufferedWriter writer = new BufferedWriter(new FileWriter(
+						new File(getDataFolder(), this.logFileName), true));
 				DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 				Date date = new Date();
 				writer.write("[" + dateFormat.format(date) + "] " + message);

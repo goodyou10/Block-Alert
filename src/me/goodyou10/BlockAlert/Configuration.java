@@ -41,7 +41,7 @@ public class Configuration {
 		plugin.breakAlert = conf.getIntegerList("alert.break");
 		this.plugin.debug("Added ids " + plugin.breakAlert.toString()
 				+ " to break alert.");
-		//Log
+		// Log
 		plugin.logFile = conf.getBoolean("log.enabled", true);
 		plugin.logFileName = conf.getString("log.file", "log.txt");
 		this.plugin.debug("Log:");

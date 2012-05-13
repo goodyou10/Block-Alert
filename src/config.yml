@@ -1,3 +1,18 @@
+# Block Alert
+# This is the configuration file for Block Alert
+# Debug: This will send debug information to the console.
+# The information can then be used to submit a ticket about an issue you may have.
+# WARNING: This will spam your console if your server is busy.
+# Alert: All alerts are under here.
+# Place: Alert admins when someone places the block that is listed.
+# List them like:
+# - 1
+# - 2
+# Break: Alert admins when someone breaks a block that is listed.
+# Same format as the place alert.
+# Log: All file logging options (More comming soon)
+# Enabled: Enable logging to file.
+# File: Name of the file to log to.
 debug: false
 alert:
   place:
